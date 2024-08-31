@@ -1,10 +1,10 @@
 Vagrant.configure("2") do |config|
-    config.env.enable              # Habilitamos vagrant-env(.env)
-
+    config.env.enable              # Habilitamos vagrant-env(.env) 
+    config.vm.boot_timeout = 600
     if ENV['TESTS'] == 'true'
         config.vm.define "test" do |testing|
-            testing.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
-
+            testing.vm.box = "gutehall/ubuntu24-04"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            testing.vm.box_version = "2024.08.30"
             testing.vm.provision "shell", inline: <<-SHELL
                 # Instalar ChefDK
                 wget -qO- https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk
@@ -21,11 +21,15 @@ Vagrant.configure("2") do |config|
         end
     else
         config.vm.define "database" do |db|
-            db.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            db.vm.box = "gutehall/ubuntu24-04"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            config.vm.box_version = "2024.08.30"
             db.vm.hostname = "db.epnewman.edu.pe"
-            db.vm.network "private_network", ip: ENV["DB_IP"]
-
-            db.vm.provision "chef_solo" do |chef|
+            db.vm.network "public_network", ip: ENV["DB_IP"]
+            db.vm.provider "vmware_workstation" do |dbs| 
+                dbs.memory = "2048"
+                dbs.cpus = 2
+            end
+            db.vm.provision "chef_solo" do |chef| 
                 chef.install = "true"
                 chef.arguments = "--chef-license accept"
                 chef.add_recipe "database"
@@ -41,10 +45,11 @@ Vagrant.configure("2") do |config|
         end
 
         config.vm.define "wordpress" do |sitio|
-            sitio.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            sitio.vm.box = "gutehall/ubuntu24-04"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            config.vm.box_version = "2024.08.30"
             sitio.vm.hostname = "wordpress.epnewman.edu.pe"
-            sitio.vm.network "private_network", ip: ENV["WP_IP"]
-
+            sitio.vm.network "public_network", ip: ENV["WP_IP"]
+            sitio.vm.provider "vmware_workstation"
             sitio.vm.provision "chef_solo" do |chef|
                 chef.install = "true"
                 chef.arguments = "--chef-license accept"
@@ -60,10 +65,11 @@ Vagrant.configure("2") do |config|
         end
 
         config.vm.define "proxy" do |proxy|
-            proxy.vm.box = ENV["BOX_NAME"] || "ubuntu/focal64"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            proxy.vm.box = "gutehall/ubuntu24-04"  # Utilizamos una imagen de Ubuntu 20.04 por defecto
+            config.vm.box_version = "2024.08.30"
             proxy.vm.hostname = "wordpress.epnewman.edu.pe"
-            proxy.vm.network "private_network", ip: ENV["PROXY_IP"]
-
+            proxy.vm.network "public_network", ip: ENV["PROXY_IP"]
+            proxy.vm.provider "vmware_workstation"
             proxy.vm.provision "chef_solo" do |chef|
                 chef.install = "true"
                 chef.arguments = "--chef-license accept"
