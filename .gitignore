@@ -1,0 +1,5 @@
+# Ignorar directorios de de compilación
+.vagrant/
+.vagrant/rgloader/loader.rb
+.vagrant/rgloader/*.rb
+.vagrant/rgloader/loader.rb
