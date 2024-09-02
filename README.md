@@ -4,7 +4,7 @@ El Objetivo de este proyecto es desplegar Wondpress usando Vagrant y Chef.
 
 ## IP's
 
-- Se espera que la red de las VMs sea 192.168.56.0/24. Si VirtualBox tiene otro rango de red entonces se debe ajustar el archivio `.env` con los valores adecuados.
+- Se espera que la red de las VMs sea 192.168.1.0/24. Si VirtualBox tiene otro rango de red entonces se debe ajustar el archivio `.env` con los valores adecuados.
 
 ## Pre-requisitos
 
@@ -72,6 +72,10 @@ Ejecuta el instalador y sigue las instrucciones en pantalla.
 
 ```bash
  gem install serverspec
+```
+## Para VMWare
+```bash
+ vagrant plugin install vagrant-vmware-desktop
 ```
 
 ## Arquitectura
