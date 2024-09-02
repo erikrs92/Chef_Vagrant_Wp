@@ -96,7 +96,7 @@ Antes de levantar Vagrant se define la caja que se usará. Mira el siguiente dia
 ```mermaid
 graph TB;
     A[Inicio] --> B{BOX_NAME?}
-    B -->|Si| C["Deploy ubuntu/focal64"]
+    B -->|Si| C["Deploy gutehall/ubuntu24-04"]
     B -->|No| D["Deploy generic/centos8"]
     C --> E[Fin]
     D --> E[Fin]
