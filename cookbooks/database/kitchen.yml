@@ -26,10 +26,11 @@ platforms:
       provision: true
       box: generic/centos8
       vm_hostname: db.epnewman.edu.pe
-  - name: ubuntu-20.04
+  - name: ubuntu-24.04
     driver:
       provision: true
-      box: ubuntu/focal64
+      box: gutehall/ubuntu24-04
+      box-version: 2024.08.30
       vm_hostname: db.epnewman.edu.pe
 
 suites:
