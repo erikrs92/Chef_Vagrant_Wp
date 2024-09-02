@@ -3,3 +3,4 @@
 .vagrant/rgloader/loader.rb
 .vagrant/rgloader/*.rb
 .vagrant/rgloader/loader.rb
+.vagrant/bundler/global.sol
